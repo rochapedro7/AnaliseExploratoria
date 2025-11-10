@@ -1,8 +1,7 @@
 # Analise Exploratoria
 
 Atividade de sala — Prática Estatística II\
-Conteúdo: Git, GitHub e RStudio\ 
-Autor: Pedro Augusto Menezes Rocha
+Conteúdo: Git, GitHub e RStudio
 
 ## Scripts
 
