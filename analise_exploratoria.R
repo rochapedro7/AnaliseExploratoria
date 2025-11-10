@@ -1,24 +1,10 @@
-#############################################
-# analise_exploratoria.R
-# Script único para a atividade: leitura, limpeza,
-# análises gráficas e medidas descritivas.
-# Autor: Pedro Augusto
-# Data: 09/11/2025
-#############################################
-
-# 0) Instalar pacotes (descomente a primeira vez)
-# install.packages(c("readxl","dplyr","ggplot2","here"))
 
 library(readxl)
 library(dplyr)
 library(ggplot2)
-library(here)
 
-#importar base
-dados = read_xlsx("Base_trabalho.xlsx")
-
-# Transformar variáveis categóricas em fatores
-dados <- dados %>%
+# Importar base e ajustar fatores
+dados <- read_excel("Base_trabalho.xlsx") %>%
   mutate(
     sexo = factor(sexo, labels = c("Feminino", "Masculino")),
     filhos = factor(filhos, labels = c("Não", "Sim")),
@@ -28,38 +14,37 @@ dados <- dados %>%
     reincidente = factor(reincidente, labels = c("Não", "Sim"))
   )
 
-# Criar pasta de figuras
+# Estatísticas descritivas
+variaveis <- c("score_periculosidade", "idade", "tempo_preso")
+
+estatisticas <- dados %>%
+  summarise(
+    across(all_of(variaveis), list(
+      media = ~mean(., na.rm = TRUE),
+      q1 = ~quantile(., 0.25, na.rm = TRUE),
+      mediana = ~median(., na.rm = TRUE),
+      q3 = ~quantile(., 0.75, na.rm = TRUE),
+      variancia = ~var(., na.rm = TRUE),
+      desvio_padrao = ~sd(., na.rm = TRUE),
+      amplitude = ~(max(., na.rm = TRUE) - min(., na.rm = TRUE))
+    ), .names = "{.col}_{.fn}")
+  )
+
+print(estatisticas)
+
+# Gráfico de dispersão entre tempo_preso e score_periculosidade
 if(!dir.exists("figures")) dir.create("figures")
 
-# Análise de dados faltantes
-colSums(is.na(dados))
+p5 <- ggplot(dados, aes(x = tempo_preso, y = score_periculosidade)) +
+  geom_point(color = "darkred") +
+  geom_smooth(method = "lm", se = TRUE, color = "black") +
+  labs(title = "Dispersão: Tempo Preso x Score de Periculosidade",
+       x = "Tempo preso (meses)", y = "Score de periculosidade")
+ggsave("figures/dispersao_tempo_score.png", p5)
+ggsave("figures/dispersao_tempo_score.pdf", p5)
 
-# Histograma da idade
-p1 <- ggplot(dados, aes(x = idade)) +
-  geom_histogram(binwidth = 5, fill = "steelblue", color = "black") +
-  labs(title = "Histograma da Idade", x = "Idade (anos)", y = "Frequência")
-ggsave("figures/histograma_idade.png", p1)
-ggsave("figures/histograma_idade.pdf", p1)
+# Correlação
+correlacao <- cor(dados$tempo_preso, dados$score_periculosidade)
+cat("Correlação entre tempo_preso e score_periculosidade:", round(correlacao, 3), "\n")
 
-# Boxplot do tempo preso
-p2 <- ggplot(dados, aes(y = tempo_preso)) +
-  geom_boxplot(fill = "orange") +
-  labs(title = "Boxplot do Tempo Preso", y = "Tempo preso (meses)")
-ggsave("figures/boxplot_tempo_preso.png", p2)
-ggsave("figures/boxplot_tempo_preso.pdf", p2)
-
-# Boxplot do score_periculosidade por escolaridade
-p3 <- ggplot(dados, aes(x = escolaridade, y = score_periculosidade)) +
-  geom_boxplot(fill = "lightgreen") +
-  labs(title = "Score de Periculosidade por Escolaridade",
-       x = "Escolaridade", y = "Score de periculosidade")
-ggsave("figures/boxplot_score_por_escolaridade.png", p3)
-ggsave("figures/boxplot_score_por_escolaridade.pdf", p3)
-
-# Gráfico de barras da variável reincidente
-p4 <- ggplot(dados, aes(x = reincidente)) +
-  geom_bar(fill = "purple") +
-  labs(title = "Distribuição de Reincidentes",
-       x = "Reincidente", y = "Frequência")
-ggsave("figures/grafico_reincidente.png", p4)
-ggsave("figures/grafico_reincidente.pdf", p4)
+# Variância, desvio padrão e amplitude (já calculados acima)
