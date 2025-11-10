@@ -1,39 +1,70 @@
-# Analise Exploratoria
+# 📊 Análise Exploratória
 
-**Atividade de sala — Prática Estatística II**
+**Atividade de Sala:** Prática Estatística II
 
-**Conteúdo:** Git, GitHub e RStudio Autor: Pedro Augusto Menezes Rocha
+**Conteúdo Principal:** Git, GitHub e RStudio
 
 **Autor:** Pedro Augusto Menezes Rocha
 
-## Scripts
+------------------------------------------------------------------------
 
--   **analise_graficas.R**: gera histogramas, boxplots e gráfico de barras.
--   **analise_exploratorias.R**: calcula medidas descritivas e gera gráfico de dispersão.
+## 💻 1. Estrutura do Repositório
 
-## Gráficos gerados
+Este projeto está organizado para garantir a reprodutibilidade da análise, com a separação clara entre dados, scripts e resultados.
 
--   Histograma da idade
--   Boxplot do tempo preso
--   Boxplot do score de periculosidade por escolaridade
--   Gráfico de barras da variável reincidente
--   Gráfico de dispersão entre tempo preso e score de periculosidade
+### 1.1. Dados e Dicionário
 
-## Resultados gráficos
+| Arquivo | Descrição |
+|:---|:---|
+| `Base_trabalho.xlsx` | O conjunto de dados principal utilizado na análise. |
+| `dicionario_Base_trabalho.xlsx` | Arquivo contendo a descrição das variáveis presentes na base de dados. |
 
--   **Idade e Tempo Preso**: A população analisada é majoritariamente de adultos jovens/meia-idade (pico entre 25-55 anos) e o tempo preso mediano é de aproximadamente 60 meses.
+### 1.2. Scripts e Ambiente
 
--   **Reincidência**: A grande maioria da amostra é classificada como Não Reincidente (cerca de 80-90%).
+| Arquivo | Descrição |
+|:---|:---|
+| `analise_exploratoria.R` | Script contendo o código R para a análise exploratória (transformação, medidas estatísticas, etc.). |
+| `analise_grafica.R` | Script dedicado à geração dos gráficos e visualizações de dados. |
+| `AnaliseExploratoria.Rproj` | Arquivo do projeto RStudio, garantindo o correto ambiente de trabalho. |
+| `.gitignore` | Arquivo de configuração que especifica quais arquivos e pastas o Git deve ignorar. |
 
--   **Correlação**: Existe uma correlação positiva entre o Tempo Preso e o Score de Periculosidade: indivíduos com maior tempo preso tendem a apresentar um score de periculosidade mais elevado.
+### 1.3. Resultados e Documentação
 
--   **Escolaridade**: O nível de escolaridade (Fundamental, Médio, Superior) não apresenta diferença significativa na mediana do Score de Periculosidade, sugerindo que este fator isolado não influencia o valor central do risco.
+| Arquivo/Pasta | Descrição |
+|:---|:---|
+| `figures/` | Pasta que armazena todas as figuras (gráficos, boxplots, histogramas) geradas pelos scripts. |
+| `README.md` | Documentação principal do projeto. |
 
-## Definições usadas
+------------------------------------------------------------------------
 
--   **Média:** soma dos valores dividida pelo número de observações
--   **Mediana:** valor central da distribuição
--   **1º e 3º quartil:** valores que delimitam 25% e 75% dos dados
--   **Variância:** média dos quadrados dos desvios em relação à média
--   **Desvio padrão:** raiz quadrada da variância
--   **Amplitude:** diferença entre o maior e o menor valor
+## 📈 2. Resultados Gráficos e Visualização
+
+### 2.1. Gráficos Gerados
+
+Os scripts foram utilizados para gerar as seguintes visualizações:
+
+-   **Histograma da Idade**
+-   **Boxplot do Tempo Preso**
+-   **Boxplot do Score de Periculosidade por Escolaridade**
+-   **Gráfico de Barras da Variável Reincidente**
+-   **Gráfico de Dispersão** entre Tempo Preso e Score de Periculosidade
+
+### 2.2. Interpretação dos Resultados
+
+-   **Idade e Tempo Preso**: A população analisada é majoritariamente de adultos jovens/meia-idade (pico entre **25-55 anos**), e o tempo preso mediano é de aproximadamente **60 meses**.
+-   **Reincidência**: A grande maioria da amostra é classificada como **Não Reincidente** (cerca de 80-90%).
+-   **Correlação**: Existe uma **correlação positiva** entre o Tempo Preso e o Score de Periculosidade: indivíduos com maior tempo preso tendem a apresentar um score de periculosidade mais elevado.
+-   **Escolaridade**: O nível de escolaridade (Fundamental, Médio, Superior) **não apresenta diferença significativa** na mediana do Score de Periculosidade.
+
+------------------------------------------------------------------------
+
+## 📚 3. Definições Estatísticas
+
+As seguintes medidas de tendência central e dispersão foram utilizadas ou definidas na análise:
+
+-   **Média:** Soma dos valores $(\sum x_i)$ dividida pelo número de observações $(n)$.
+-   **Mediana:** O valor central da distribuição, que divide os dados em duas metades iguais (50%).
+-   **1º e 3º Quartil (Q1 e Q3):** Valores que delimitam 25% e 75% dos dados, respectivamente.
+-   **Variância:** Média dos quadrados dos desvios em relação à média ($\frac{\sum (x_i - \bar{x})^2}{n-1}$).
+-   **Desvio Padrão:** Raiz quadrada da variância $(\sqrt{\text{Variância}})$.
+-   **Amplitude:** Diferença entre o maior e o menor valor na distribuição $(\text{Máximo} - \text{Mínimo})$.
